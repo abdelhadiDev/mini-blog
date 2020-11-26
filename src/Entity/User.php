@@ -10,10 +10,12 @@ use Doctrine\Common\Collections\Collection;
 use phpDocumentor\Reflection\Types\Integer;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Security\Core\User\UserInterface;
+use ApiPlatform\Core\Annotation\ApiResource;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
  * @ORM\Table(name="`user`")
+ * @ApiResource()
  */
 class User implements UserInterface
 {
