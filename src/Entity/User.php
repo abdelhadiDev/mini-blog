@@ -8,14 +8,30 @@ use Doctrine\ORM\Mapping as ORM;
 use App\Repository\UserRepository;
 use Doctrine\Common\Collections\Collection;
 use phpDocumentor\Reflection\Types\Integer;
-use Doctrine\Common\Collections\ArrayCollection;
-use Symfony\Component\Security\Core\User\UserInterface;
 use ApiPlatform\Core\Annotation\ApiResource;
+use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
  * @ORM\Table(name="`user`")
- * @ApiResource()
+ * @ApiResource(
+ *      collectionOperations={
+ *          "get"={
+ *              "normalization_context"={"groups"={"user_read"}}
+ *          },
+ *          "post"
+ *      },
+ *      itemOperations={
+ *          "get"={
+ *              "normalization_context"={"groups"={"user_details_read"}}
+ *          },
+ *          "put",
+ *          "patch",
+ *          "delete"
+ *      }
+ * )
  */
 class User implements UserInterface
 {
@@ -24,6 +40,7 @@ class User implements UserInterface
     
     /**
      * @ORM\Column(type="string", length=180, unique=true)
+     * @Groups({"user_read", "user_details_read", "article_details_read"})
      */
     private $email;
 
@@ -40,6 +57,7 @@ class User implements UserInterface
 
     /**
      * @ORM\OneToMany(targetEntity=Article::class, mappedBy="author")
+     * @Groups({"user_details_read"})
      */
     private $articles;
 
