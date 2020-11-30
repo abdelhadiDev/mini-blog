@@ -21,12 +21,14 @@ class AppFixtures extends Fixture
     public function load(ObjectManager $manager)
     {
         $fake = Factory::create();
-        for ($i = 0; $i < 10; $i++) {
+        for ($i = 0; $i < 50; $i++) {
             $user = new User();
 
             $passwordHash = $this->encoder->encodePassword($user, 'password');
             $user->setEmail($fake->email)
-            ->setPassword($passwordHash);
+            ->setPassword($passwordHash)
+            ->setAge($fake->numberBetween(18, 50))
+            ->setStatus($fake->boolean(90));
 
             $manager->persist($user);
 

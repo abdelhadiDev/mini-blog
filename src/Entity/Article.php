@@ -8,6 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 use App\Repository\ArticleRepository;
 use ApiPlatform\Core\Annotation\ApiResource;
 use Symfony\Component\Serializer\Annotation\Groups;
+use App\Controller\ArticleUpdatedAt;
 
 /**
  * @ORM\Entity(repositoryClass=ArticleRepository::class)
@@ -24,7 +25,12 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *          },
  *          "put",
  *          "patch",
- *          "delete"
+ *          "delete",
+ *          "put_updated_at"={
+ *              "method"="PUT",
+ *              "path"="/articles/{id}/updated-at",
+ *              "controller"=ArticleUpdatedAt::class
+ *          }
  *      }
  * )
  */
