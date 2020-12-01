@@ -9,6 +9,7 @@ use App\Repository\ArticleRepository;
 use ApiPlatform\Core\Annotation\ApiResource;
 use Symfony\Component\Serializer\Annotation\Groups;
 use App\Controller\ArticleUpdatedAt;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass=ArticleRepository::class)
@@ -43,19 +44,19 @@ class Article
      * @ORM\Column(type="string", length=255)
      * @Groups({"article_read", "article_details_read", "user_details_read"})
      */
-    private $name;
+    private string $name;
 
     /**
      * @ORM\Column(type="text")
      * @Groups({"article_read", "article_details_read", "user_details_read"})
      */
-    private $content;
+    private string $content;
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="articles")
      * @Groups({"article_details_read"})
      */
-    private $author;
+    private UserInterface $author;
 
     public function __construct()
     {
@@ -86,12 +87,12 @@ class Article
         return $this;
     }
 
-    public function getAuthor(): ?User
+    public function getAuthor(): UserInterface
     {
         return $this->author;
     }
 
-    public function setAuthor(?User $author): self
+    public function setAuthor(UserInterface $author): self
     {
         $this->author = $author;
 
