@@ -11,7 +11,9 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class AppFixtures extends Fixture
 {
-    private $encoder;
+    const DEFAULT_USER = ["email" => "abdelhadi@test.com", "password" => "passpass", "status" => true, "age" => 26];
+
+    private UserPasswordEncoderInterface $encoder;
 
     public function __construct(UserPasswordEncoderInterface $encoder) 
     {
@@ -21,6 +23,18 @@ class AppFixtures extends Fixture
     public function load(ObjectManager $manager)
     {
         $fake = Factory::create();
+
+        $defaultUser = new User();
+        $passwordHash = $this->encoder->encodePassword($defaultUser, self::DEFAULT_USER['password']);
+
+        $defaultUser->setEmail(self::DEFAULT_USER['email'])
+            ->setPassword($passwordHash)
+            ->setAge($fake->numberBetween(18, 50))
+            ->setStatus($fake->boolean(90));
+
+        $manager->persist($defaultUser);
+
+
         for ($i = 0; $i < 50; $i++) {
             $user = new User();
 
