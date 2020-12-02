@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Events;
+namespace App\EventSubscriber;
 
 use ApiPlatform\Core\EventListener\EventPriorities;
 use App\Entity\Article;

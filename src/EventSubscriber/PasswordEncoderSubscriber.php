@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Events;
+namespace App\EventSubscriber;
 
 use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\HttpKernel\Event\ViewEvent;
